@@ -15,6 +15,19 @@
                 {% endif %}
             </div>
 
+
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label}}">last name:</label>
+                <input type="text" name="{{ form.last_name.name }}" class="form-control" value="{{ form.last_name.value}}" />
+                <span class="text-danger">{{ form.last_name.errors }}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label}}">first name:</label>
+                <input type="text" name="{{ form.first_name.name }}" class="form-control" value="{{ form.first_name.value}}" />
+                <span class="text-danger">{{ form.first_name.errors }}</span>
+            </div>
+
             
             <div class="form-group">
                 <label for="{{ form.password1.id_for_label}}">Password:</label>
@@ -27,9 +40,9 @@
                 <span class="text-danger">{{ form.password2.errors }}</span>
             </div>
 
-            <button type="submit" class="btn btn-dark">Submit</button>
+            <button type="submit" class="btn" style="background-color: #90EE90;">Submit</button>
 
-            <a href="{% url 'login' %}" class="btn btn-default">Login</a>
+            <a href="{% url 'login' %}" class="btn btn-default" style="color: blue;">Login</a>
 
         </form>
     </div>

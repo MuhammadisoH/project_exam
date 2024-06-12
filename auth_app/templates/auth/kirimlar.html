@@ -1,0 +1,88 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Page</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <span class="username">{{ request.user.username }}</span>
+        <nav>
+            <ul>
+                <li><a href="{% url 'chiqimlar' %}">Chiqimalr</a></li>
+                <li><a href="{% url 'hisobotlar' %}">Hisobotlar</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="left-half">
+                <img src="https://thumbs.dreamstime.com/b/time-money-concept-office-clock-dollar-coin-realistic-icon-arrows-time-money-concept-office-clock-dollar-coin-259776389.jpg" alt="Gears and Coins">
+            </div>
+            <div class="right-half">
+                <h2 class="section-title">Kirimlar</h2>
+                <form method="POST" action="{% url 'dashboard' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.summa.id_for_label }}">Summa:</label>
+                        <div class="input-icon">
+                            <span class="dollar-icon">$</span>
+                            <input type="text" name="{{ form.summa.name }}" id="{{ form.summa.id_for_label }}" class="form-control" value="{{ form.summa.value }}" />
+                        </div>
+                        {% if form.summa.errors %}
+                            <span class="text-danger">{{ form.summa.errors }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.sana.id_for_label }}">Sana:</label>
+                        <div class="input-icon">
+                            <span class="dollar-icon">$</span>
+                            <input type="text" name="{{ form.sana.name }}" id="{{ form.sana.id_for_label }}" class="form-control" value="{{ form.sana.value }}" />
+                        </div>
+                        {% if form.sana.errors %}
+                            <span class="text-danger">{{ form.sana.errors }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="hisoblar">Hisoblar:</label>
+                        <select id="hisoblar" name="hisoblar" class="form-control">
+                            <option value="naqt">Naqt pul</option>
+                            <option value="karta">Karta</option>
+                            <option value="valyuta">Valyuta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chiqim_turi">Chiqim turi:</label>
+                        <select id="chiqim_turi" name="chiqim_turi" class="form-control">
+                            <option value="yolkira">Yo'lkira</option>
+                            <option value="tushlik">Tushlik</option>
+                            <option value="salomatlik">Salomatlik</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tugatish</button>
+                </form>
+                <h3 class="section-title">Kirimlar Ro'yxati</h3>
+                <ul id="kirimlar-list">
+                    {% for kirim in kirimlar %}
+                        <li>
+                            <span>{{ kirim.summa }} - {{ kirim.sana }} - {{ kirim.hisoblar }} - {{ kirim.chiqim_turi }}</span>
+                            <form method="POST" action="{% url 'delete_kirim' kirim.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">O'chirish</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+{% endblock %}

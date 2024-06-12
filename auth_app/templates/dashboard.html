@@ -1,9 +1,42 @@
 {% extends 'layouts/app.html' %}
-
+{% load static %}
 {% block content %}
-
-<h1>Dashboard : {{ request.user.username }}</h1>
-<a href="{% url 'logout' %}" class="btn btn-dark">Logout</a>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+</head>
+<body>
+    <header>
+        <div class="user-info">
+            <img src="https://cdn-icons-png.freepik.com/512/7718/7718888.png" alt="User Logo" class="user-logo">
+            <span class="username">{{ request.user.username }}</span>
+        </div>
+        <div class="logout">
+            <a href="{% url 'logout' %}" class="btn btn-dark logout-btn">Logout</a>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <a href="{% url 'kirimlar' %}" class="card">
+                <div class="icon">💰</div>
+                <h3>Kirimlar</h3>
+                <p>Foydalanuvchining ishlab topgan pullari</p>
+            </a>
+            <a href="{% url 'chiqimlar' %}" class="card">
+                <div class="icon">🧾</div>
+                <h3>Chiqimlar</h3>
+                <p>Foydalanuvchining ishlatgan pullari</p>
+            </a>
+            <a href="{% url 'hisobotlar' %}" class="card">
+                <div class="icon">📊</div>
+                <h3>Hisobotlar</h3>
+                <p>Foydalanuvchining malum vaqtda ishlab topgan pullari haqida hisobot</p>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
 
 {% endblock %}

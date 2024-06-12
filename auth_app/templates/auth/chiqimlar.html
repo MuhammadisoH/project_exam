@@ -1,0 +1,75 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Page</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <span class="username">{{ request.user.username }}</span>
+        <nav>
+            <ul>
+                <li><a href="{% url 'kirimlar' %}">Kirimlar</a></li>
+                <li><a href="{% url 'hisobotlar' %}">Hisobotlar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="left-half">
+                <img src="https://thumbs.dreamstime.com/b/time-money-concept-office-clock-dollar-coin-realistic-icon-arrows-time-money-concept-office-clock-dollar-coin-259776389.jpg" alt="Gears and Coins">
+            </div>
+            <div class="right-half">
+                <h2 class="section-title">Chiqimlar</h2>
+                <form method="POST" action="{% url 'dashboard' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.summa.id_for_label }}">Summa:</label>
+                        <div class="input-icon">
+                            <span class="dollar-icon">$</span>
+                            <input type="text" name="{{ form.summa.name }}" id="{{ form.summa.id_for_label }}" class="form-control" value="{{ form.summa.value }}" />
+                        </div>
+                        {% if form.summa.errors %}
+                            <span class="text-danger">{{ form.summa.errors }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.sana.id_for_label }}">Sana:</label>
+                        <div class="input-icon">
+                            <span class="dollar-icon">$</span>
+                            <input type="text" name="{{ form.sana.name }}" id="{{ form.sana.id_for_label }}" class="form-control" value="{{ form.sana.value }}" />
+                        </div>
+                        {% if form.sana.errors %}
+                            <span class="text-danger">{{ form.sana.errors }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        
+                        <label for="expense-type">Hisoblar:</label>
+                        <select id="expense-type" name="expense-type" class="form-control">
+                            <option value="yolkira">Naqt pul</option>
+                            <option value="tushlik">Karta</option>
+                            <option value="salomatlik">Valyuta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-type">Chiqim turi:</label>
+                        <select id="expense-type" name="expense-type" class="form-control">
+                            <option value="yolkira">Yo'lkira</option>
+                            <option value="tushlik">Tushlik</option>
+                            <option value="salomatlik">Salomatlik</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tugatish</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+{% endblock %}
